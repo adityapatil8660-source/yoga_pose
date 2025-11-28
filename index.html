@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Yoga Pose Detection - Upload an image to detect yoga poses and get detailed information about the pose">
+    <title>Yoga Pose Detection - AI-Powered Pose Recognition</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L14.5 8.5L21 9L16 14.5L17.5 21L12 17.5L6.5 21L8 14.5L3 9L9.5 8.5L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h1>Yoga Pose Image Detection</h1>
+                </div>
+                <p class="tagline">"Perfect Your Practice with Smart Detection."</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Introduction Section -->
+            <section class="intro-section">
+                <h2 class="section-title">Discover Your Yoga Pose</h2>
+                <p class="section-description">Upload an image and let our website identify the yoga pose, providing you with detailed information, benefits, and instructions.</p>
+            </section>
+
+            <!-- Upload Section -->
+            <section class="upload-section">
+                <div class="upload-container">
+                    <div class="upload-zone" id="uploadZone">
+                        <div class="upload-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M17 8L12 3L7 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 3V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3 class="upload-title">Drop your image here</h3>
+                        <p class="upload-text">or click to browse</p>
+                        <input type="file" id="imageInput" accept="image/*" hidden>
+                        <button class="upload-button" id="uploadButton">Choose Image</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analysis Section -->
+            <section class="analysis-section" id="analysisSection">
+                <div class="analysis-grid">
+                    <!-- Image Display -->
+                    <div class="image-card">
+                        <h3 class="card-title">Uploaded Image</h3>
+                        <div class="image-container">
+                            <img id="uploadedImage" src="" alt="Uploaded yoga pose">
+                            <canvas id="poseCanvas"></canvas>
+                        </div>
+                        <div class="loading-overlay" id="loadingOverlay">
+                            <div class="spinner"></div>
+                            <p>Analyzing pose...</p>
+                        </div>
+                    </div>
+
+                    <!-- Results Display -->
+                    <div class="results-card">
+                        <h3 class="card-title">Pose Information</h3>
+                        <div class="results-content" id="resultsContent">
+                            <div class="pose-header">
+                                <div class="pose-name-container">
+                                    <h2 class="pose-name" id="poseName">---</h2>
+                                    <p class="pose-sanskrit" id="poseSanskrit">---</p>
+                                </div>
+                                <div class="confidence-badge" id="confidenceBadge">
+                                    <span class="confidence-value" id="confidenceValue">0%</span>
+                                    <span class="confidence-label">Confidence</span>
+                                </div>
+                            </div>
+
+                            <div class="pose-details">
+                                <div class="detail-section">
+                                    <h4 class="detail-title">
+                                        <svg class="detail-icon" viewBox="0 0 24 24" fill="none">
+                                            <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        Description
+                                    </h4>
+                                    <p class="detail-text" id="poseDescription">Upload an image to see pose details.</p>
+                                </div>
+
+                                <div class="detail-section">
+                                    <h4 class="detail-title">
+                                        <svg class="detail-icon" viewBox="0 0 24 24" fill="none">
+                                            <path d="M22 12H18L15 21L9 3L6 12H2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        Benefits
+                                    </h4>
+                                    <ul class="benefits-list" id="benefitsList">
+                                        <li>Waiting for analysis...</li>
+                                    </ul>
+                                </div>
+
+                                <div class="detail-section">
+                                    <h4 class="detail-title">
+                                        <svg class="detail-icon" viewBox="0 0 24 24" fill="none">
+                                            <path d="M12 2V6M12 18V22M4.93 4.93L7.76 7.76M16.24 16.24L19.07 19.07M2 12H6M18 12H22M4.93 19.07L7.76 16.24M16.24 7.76L19.07 4.93" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        Instructions
+                                    </h4>
+                                    <ol class="instructions-list" id="instructionsList">
+                                        <li>Waiting for analysis...</li>
+                                    </ol>
+                                </div>
+
+                                <div class="detail-section">
+                                    <div class="meta-info">
+                                        <div class="meta-item">
+                                            <span class="meta-label">Difficulty:</span>
+                                            <span class="meta-value" id="poseDifficulty">---</span>
+                                        </div>
+                                        <div class="meta-item">
+                                            <span class="meta-label">Category:</span>
+                                            <span class="meta-value" id="poseCategory">---</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Yoga. Powered by MediaPipe.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+    <script src="poses.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
